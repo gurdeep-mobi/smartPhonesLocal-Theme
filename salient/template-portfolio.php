@@ -61,7 +61,7 @@ $bg = get_post_meta($post->ID, '_nectar_header_bg', true);
 	jQuery(document).ready(function($){
 		//more padding if using header bg on 4 col
 		if( $('#page-header-bg').length > 0 && '<?php echo $cols; ?>' == 'cols-4') { $('.container-wrap').css('padding-top','3.3em'); }
-	
+		//alert(123);
 	});
 </script>
 
