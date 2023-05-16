@@ -1,0 +1,137 @@
+/*
+Theme Name: SmartPhonesPLUS
+Theme URI: http://www.themenectar.com
+Template: salient
+Author: IMG Team
+Author URI: http://growwithimg.com
+Description: An Ultra Responsive Multi-Purpose Theme.
+Version: 8.5.5.1589918800
+Updated: 2020-05-19 20:06:40
+
+*/
+
+body, h1, h2, h3, h4, h5, h6, p, a, li {
+    font-family: 'Montserrat';
+}
+body p {
+    font-weight: 100;
+}
+#ajax-content-wrap > div.container-wrap {
+    padding-top: 0 !important;
+}
+.buy-btn a:before {
+    -moz-border-radius: 15px !important;
+    -webkit-border-radius: 15px !important;
+    -o-border-radius: 15px !important;
+    border-radius: 15px !important;
+}
+.sell-btn a:before {
+    -moz-border-radius: 15px !important;
+    -webkit-border-radius: 15px !important;
+    -o-border-radius: 15px !important;
+    border-radius: 15px !important;
+}
+.buy-btn {
+    -moz-border-radius: 15px !important;
+    -webkit-border-radius: 15px !important;
+    -o-border-radius: 15px !important;
+    border-radius: 15px !important;
+}
+.sell-btn {
+    -moz-border-radius: 15px !important;
+    -webkit-border-radius: 15px !important;
+    -o-border-radius: 15px !important;
+    border-radius: 15px !important;
+}
+.left-img {
+    position: relative;
+    z-index: 2;
+}
+#footer-widgets h4 {
+    font-size: 14px !important;
+    font-weight: bold !important;
+}
+.textwidget a {
+    font-size: 14px;
+}
+#custom_html-2 a span {
+    padding-left: 20px;
+}
+#custom_html-3 a span {
+    padding-left: 20px;
+}
+#custom_html-4 a span {
+    padding-left: 20px;
+}
+#custom_html-5 a span {
+    padding-left: 20px;
+}
+#copyright p {
+    width: 250%;
+}
+.icon-salient-cart {
+    display: none;
+}
+div .button {
+    background-color: #1494b8;
+    font-size: 20px;
+    text-align: center;
+    color: white;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -o-border-radius: 15px;
+    border-radius: 15px;
+    border-style: none;
+    padding: 10px 20px;
+    margin: 0 auto;
+}
+div .button:hover {
+    opacity: 0.8;
+}
+div .button a {
+    font-size: 20px;
+    color: white;
+}
+.wpb_raw_html div {
+    text-align: center;
+    margin: 0 auto;
+}
+.email-form input {
+    font-size: 14px;
+    -moz-border-radius: 25px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 10px;
+    -o-border-radius: 25px;
+    -webkit-border-radius: 10px;
+    border-radius: 25px;
+    -o-border-radius: 10px;
+    border-radius: 10px;
+}
+.product-search {
+    width: 50%;
+    background-color: white;
+    margin: 0 auto;
+}
+.product-search input {
+    background-color: white;
+    border: 1px solid black;
+    -moz-box-shadow: 1px 1px;
+    -webkit-box-shadow: 1px 1px;
+    -o-box-shadow: 1px 1px;
+    box-shadow: 1px 1px;
+}
+button#responsive-menu-button {
+    display: none;
+}
+.buy-button:hover {
+    background-color: #ff9747 !important;
+}
+.sell-button:hover {
+    background-color: #24a4c7 !important;
+}
+header#top nav > ul > li[class*="button_solid_color"] > a:before, #header-outer.transparent header#top nav > ul > li[class*="button_solid_color"] > a:before {
+    -moz-border-radius: 15px !important;
+    -webkit-border-radius: 15px !important;
+    -o-border-radius: 15px !important;
+    border-radius: 15px !important;
+}

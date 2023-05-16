@@ -1,0 +1,127 @@
+/*
+Theme Name: SmartPhonesPLUS
+Theme URI: http://www.themenectar.com
+Template: salient
+Author: IMG Team
+Author URI: http://growwithimg.com
+Description: An Ultra Responsive Multi-Purpose Theme.
+Version: 8.5.5.1541606355
+Updated: 2018-11-07 15:59:15
+
+*/
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+/* Woocommerce single product page */
+
+
+
+
+
+
+/* -----------UPDATES NOV 2018 ---------- */
+
+
+body, h1, h2, h3, h4, h5, h6, p, a, li {
+    font-family:'Montserrat';
+}
+body p {
+    font-weight: 100;
+}
+#ajax-content-wrap > div.container-wrap {
+    padding-top:0px !important;
+}
+.buy-btn a:before{
+    border-radius: 15px !important;
+}
+.sell-btn a:before{
+    border-radius: 15px !important;
+}
+.buy-btn {
+	border-radius: 15px !important;
+}
+.sell-btn {
+	border-radius: 15px !important;
+}
+.left-img {
+    position: relative;
+    z-index:2;
+}
+#footer-widgets h4{
+    font-weight: bold !important;
+    font-size:14px !important;
+}
+.textwidget a{
+    font-size:14px;
+} 
+#custom_html-2 a span{
+    padding-left:20px;
+}
+#custom_html-3 a span{
+    padding-left:20px;
+}
+#custom_html-4 a span{
+    padding-left:20px;
+}
+#custom_html-5 a span{
+    padding-left:20px;
+}
+#copyright p{
+    width: 250%;
+}
+.icon-salient-cart {
+    display: none;
+}
+div .button {
+    background-color: #1494b8;
+    padding: 10px 20px;
+    border-style: none;
+    margin: 0 auto;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    border-radius: 15px;
+}
+div .button:hover {
+    opacity: 0.8;
+}
+div .button a {
+    color: white;
+    font-size: 20px;
+}
+.wpb_raw_html div {
+    text-align: center;
+    margin: 0 auto;
+}
+.email-form input{
+    border-radius:25px;
+}
+.product-search {
+    width: 50%;
+    margin: 0 auto;
+    background-color: white;
+}
+.product-search input {
+    background-color: white;
+    border: 1px solid black;
+    box-shadow:1px 1px;
+}
+.email-form input {
+    border-radius:10px;
+    font-size:14px;
+}
+button#responsive-menu-button {
+    display:none;
+}
+.buy-button:hover {
+    background-color:#ff9747 !important;
+}
+.sell-button:hover {
+    background-color:#24a4c7 !important;
+}
+header#top nav > ul > li[class*="button_solid_color"] > a:before, #header-outer.transparent header#top nav > ul > li[class*="button_solid_color"] > a:before {
+	border-radius: 15px !important;
+}
+
+
+
+

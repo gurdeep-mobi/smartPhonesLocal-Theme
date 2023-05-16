@@ -1,0 +1,10 @@
+.video_thumbnail_button img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 1px solid;
+}
+
+#woocommerce-product-data ul.wc-tabs li.video_options a::before {
+    content: "\f236";
+}
