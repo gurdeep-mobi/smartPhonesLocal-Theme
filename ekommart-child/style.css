@@ -18,6 +18,11 @@ header .site-header-wishlist {
 	max-height: 101px;
 	height: 100%;
 }
+
+#thwmsc_wrapper{
+	width: 70% !important;
+}
+
 #masthead.site-header.header-5 {
 	margin-bottom: 0px;
 }

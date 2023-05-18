@@ -228,14 +228,14 @@ function wc_billing_field_strings( $translated_text, $text, $domain ) {
 }
 add_filter( 'gettext', 'wc_billing_field_strings', 20, 3 );
 
-add_action( 'woocommerce_after_cart_totals', 'tl_continue_shopping_button' );
-function tl_continue_shopping_button() {
- $shop_page_url = get_permalink( woocommerce_get_page_id( 'shop' ) );
+// add_action( 'woocommerce_after_cart_totals', 'tl_continue_shopping_button' );
+// function tl_continue_shopping_button() {
+//  $shop_page_url = get_permalink( woocommerce_get_page_id( 'shop' ) );
  
- echo '<div class="wc-proceed-to-continue">';
- echo ' <a href="'.$shop_page_url.'" class="checkout-button button">Continue Selling </a>';
- echo '</div>';
-}
+//  echo '<div class="wc-proceed-to-continue">';
+//  echo ' <a href="'.$shop_page_url.'" class="checkout-button button">Continue Selling </a>';
+//  echo '</div>';
+// }
 
  /**
   * Edit my account menu order
