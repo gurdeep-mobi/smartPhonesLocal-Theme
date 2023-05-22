@@ -370,36 +370,43 @@ jQuery('#billing_paypal_email_field,#billing_paypal_email_confirm_field,#billing
 
 /*show paypal required fields */
 if(jQuery('body').hasClass('woocommerce-checkout')) {
-if(jQuery('select[name="billing_payment_options"] option:selected').val() == 'PayPal') {     
-  jQuery('#billing_paypal_email_field,#billing_paypal_email_confirm_field').show();         
-} else {
-  jQuery('#billing_paypal_email_field,#billing_paypal_email_confirm_field').hide();
-}
-if(jQuery('select[name="billing_payment_options"] option:selected').val() == 'Venmo') {
-  jQuery('#billing_venmo_no_field,#billing_venmo_no_confirm_field').show();       
-} else {
-  jQuery('#billing_venmo_no_field,#billing_venmo_no_confirm_field').hide();
-}
-jQuery('select[name="billing_payment_options"]').on('change', function() {
-  var selectVal = jQuery(this).find('option:selected').val();
-  if(selectVal == 'PayPal') {
-    jQuery('#billing_paypal_email_field,#billing_paypal_email_confirm_field').show();           
+
+  //if(jQuery('select[name="billing_payment_options"] option:selected').val() == 'PayPal') {  
+  if(jQuery('input[name="billing_payment_options"]:checked').val() == 'PayPal') {     
+    jQuery('#billing_paypal_email_field,#billing_paypal_email_confirm_field').show();         
   } else {
     jQuery('#billing_paypal_email_field,#billing_paypal_email_confirm_field').hide();
   }
-  if(selectVal == 'Venmo') {
-    jQuery('#billing_venmo_no_field,#billing_venmo_no_confirm_field').show();           
+
+  //if(jQuery('select[name="billing_payment_options"] option:selected').val() == 'Venmo') {
+  if(jQuery('input[name="billing_payment_options"]:checked').val() == 'Venmo') {
+    jQuery('#billing_venmo_no_field,#billing_venmo_no_confirm_field').show();       
   } else {
     jQuery('#billing_venmo_no_field,#billing_venmo_no_confirm_field').hide();
-  }    
-});
-var totalAmuont = parseInt(jQuery('.order-total').find('.woocommerce-Price-amount.amount').text().replace('$', ''));
-if(totalAmuont < 15 || jQuery(document).find('span[data-category-checkout="true"]').hasClass('remove-fields')) {
-  jQuery('#additional_box_field').hide();
-} else {
-  jQuery('#additional_box_field').show();
-}
+  }
 
+  //jQuery('select[name="billing_payment_options"]').on('change', function() {
+  jQuery('input[name="billing_payment_options"]').on('click', function() {
+    //var selectVal = jQuery(this).find('option:selected').val();
+    var selectVal = jQuery('input[name="billing_payment_options"]:checked').val();
+    if(selectVal == 'PayPal') {
+      jQuery('#billing_paypal_email_field,#billing_paypal_email_confirm_field').show();           
+    } else {
+      jQuery('#billing_paypal_email_field,#billing_paypal_email_confirm_field').hide();
+    }
+    if(selectVal == 'Venmo') {
+      jQuery('#billing_venmo_no_field,#billing_venmo_no_confirm_field').show();           
+    } else {
+      jQuery('#billing_venmo_no_field,#billing_venmo_no_confirm_field').hide();
+    }    
+  });
+
+  var totalAmuont = parseInt(jQuery('.order-total').find('.woocommerce-Price-amount.amount').text().replace('$', ''));
+  if(totalAmuont < 15 || jQuery(document).find('span[data-category-checkout="true"]').hasClass('remove-fields')) {
+    jQuery('#additional_box_field').hide();
+  } else {
+    jQuery('#additional_box_field').show();
+  }
 }
 /*show paypal required fields end */
   
@@ -1105,3 +1112,30 @@ function multi_array_search($array, $search)
     return 150;
   }
   add_filter('woocommerce_admin_meta_boxes_variations_per_page', 'update_variations_number');
+
+
+add_action('woocommerce_checkout_additional', 'thwmsc_add_additional_fields_in_step');
+function thwmsc_add_additional_fields_in_step(){
+  $checkout = WC()->checkout();
+  ?>
+  <div class="woocommerce-additional-fields">
+    <?php do_action( 'woocommerce_before_order_notes', $checkout ); ?>
+    <?php if ( apply_filters( 'woocommerce_enable_order_notes_field', 'yes' === get_option( 'woocommerce_enable_order_comments', 'yes' ) ) ) : ?>
+      <?php if ( ! WC()->cart->needs_shipping() || wc_ship_to_billing_address_only() ) : ?>
+        <h3><?php esc_html_e( 'Additional information', 'woocommerce' ); ?></h3>
+      <?php endif; ?>
+      <div class="woocommerce-additional-fields__field-wrapper">
+        <?php foreach ( $checkout->get_checkout_fields( 'order' ) as $key => $field ) : ?>
+          <?php woocommerce_form_field( $key, $field, $checkout->get_value( $key ) ); ?>
+        <?php endforeach; ?>
+      </div>
+    <?php endif; ?>
+    <?php do_action( 'woocommerce_after_order_notes', $checkout ); ?>
+  </div>
+  <?php
+}
+
+add_filter('woocommerce_checkout_fields', function($fields) {
+  $fields['billing']['billing_payment_options']['priority'] = 1;
+  return $fields;
+});
