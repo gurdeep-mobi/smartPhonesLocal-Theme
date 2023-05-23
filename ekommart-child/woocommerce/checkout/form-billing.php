@@ -86,8 +86,8 @@ defined( 'ABSPATH' ) || exit;
  </style>
 
  <script>
- 	jQuery('label[for="billing_payment_options_Check"]').html('chhhhhhheck');
- 	jQuery('label[for="billing_payment_options_PayPal"]').html('vernsdgsbgsfbfd');
- 	jQuery('label[for="billing_payment_options_Venmo"]').html('venmo_gggggg');
+ 	jQuery('label[for="billing_payment_options_Check"]').html('image check');
+ 	jQuery('label[for="billing_payment_options_PayPal"]').html('image paypal');
+ 	jQuery('label[for="billing_payment_options_Venmo"]').html('image venmo');
  </script>
 

@@ -1113,7 +1113,7 @@ function multi_array_search($array, $search)
   }
   add_filter('woocommerce_admin_meta_boxes_variations_per_page', 'update_variations_number');
 
-
+//removed the additional code from form-shipping.php and use it seaprately here starts
 add_action('woocommerce_checkout_additional', 'thwmsc_add_additional_fields_in_step');
 function thwmsc_add_additional_fields_in_step(){
   $checkout = WC()->checkout();
@@ -1134,8 +1134,81 @@ function thwmsc_add_additional_fields_in_step(){
   </div>
   <?php
 }
+//removed the additional code from form-shipping.php and use it seaprately here ends
 
+//give the billing payment option field priority starts
 add_filter('woocommerce_checkout_fields', function($fields) {
   $fields['billing']['billing_payment_options']['priority'] = 1;
   return $fields;
 });
+//give the billing payment option field priority ends
+
+//added the custom div on right side on checkout starts
+function add_div_after_custom_div() {
+    if (is_checkout()) {
+      //$my_variable = woocommerce_review_order();
+      //ob_start();
+      //woocommerce_review_order();
+      $review_order_html = '';
+      
+        $review_order_html.= '<div class="custom-review-order">';
+        $review_order_html.= '<h3>' . esc_html__('Review Order', 'text-domain') . '</h3>';
+
+        // Display the order items and totals
+        $review_order_html.= '<table class="shop_table woocommerce-checkout-review-order-table">';
+        $review_order_html.= '<thead>';
+        $review_order_html.= '<tr>';
+        $review_order_html.= '<th class="product-thumbnail">' . esc_html__('Image', 'text-domain') . '</th>';        
+        $review_order_html.= '<th class="product-name">' . esc_html__('Product', 'text-domain') . '</th>';
+        $review_order_html.= '<th class="product-total">' . esc_html__('Total', 'text-domain') . '</th>';
+        $review_order_html.= '</tr>';
+        $review_order_html.= '</thead>';
+        $review_order_html.= '<tbody>';
+
+        // Loop through the cart items
+        foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
+            $_product = apply_filters('woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key);
+            $review_order_html.= '<tr class="woocommerce-cart-form__cart-item">';
+            $review_order_html.= '<td class="product-thumbnail">'.$_product->get_image('thumbnail');
+            $review_order_html.= '</td>';
+            $review_order_html.= '<td class="product-name">';
+            $review_order_html.= '<strong>' . wp_kses_post($_product->get_name()) . '</strong> ';
+            $review_order_html.= '<span class="product-quantity">' . sprintf('&times; %s', $cart_item['quantity']) . '</span>';
+            $review_order_html.= '</td>';
+            $review_order_html.= '<td class="product-total">';
+            $review_order_html.= wc_price($_product->get_price() * $cart_item['quantity']);
+            $review_order_html.= '</td>';
+            $review_order_html.= '</tr>';
+        }
+
+        // Display order totals
+        $review_order_html.= '<tr class="order-total">';
+        $review_order_html.= '<th>' . esc_html__('Total', 'text-domain') . '</th>';
+        $review_order_html.= '<td>' . wc_price(WC()->cart->get_total()) . '</td>';
+        $review_order_html.= '</tr>';
+
+        $review_order_html.= '</tbody>';
+        $review_order_html.= '</table>';
+        $review_order_html.= '</div>';
+
+        ?>
+        <script>
+        jQuery(document).ready(function($) {
+          var revieworder = '<?php echo ($review_order_html); ?>';
+            // Find the custom div using its ID or class
+            var customDiv = $('#thwmsc_wrapper');
+
+            //var revieworder = 'aaaaaaaaaa';
+
+            // Create the new div element
+            var newDiv = $('<div class="right-checkout-review-order-section" style="float:right; width:35%;">'+revieworder+'</div>');
+
+            // Insert the new div after the custom div
+            customDiv.after(newDiv);
+        });
+        </script>
+        <?php
+    }
+}
+add_action('woocommerce_after_checkout_form', 'add_div_after_custom_div');
+//added the custom div on right side on checkout ends
