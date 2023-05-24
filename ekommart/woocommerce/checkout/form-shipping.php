@@ -46,4 +46,4 @@ defined( 'ABSPATH' ) || exit;
 		</div>
 
 	<?php endif; ?>
-</div>$('label[for="billing_payment_options_Check"]').html(newLabelText);
+</div>

@@ -1158,7 +1158,6 @@ function add_div_after_custom_div() {
         $review_order_html.= '<table class="shop_table woocommerce-checkout-review-order-table">';
         $review_order_html.= '<thead>';
         $review_order_html.= '<tr>';
-        $review_order_html.= '<th class="product-thumbnail">' . esc_html__('Image', 'text-domain') . '</th>';        
         $review_order_html.= '<th class="product-name">' . esc_html__('Product', 'text-domain') . '</th>';
         $review_order_html.= '<th class="product-total">' . esc_html__('Total', 'text-domain') . '</th>';
         $review_order_html.= '</tr>';
@@ -1169,8 +1168,6 @@ function add_div_after_custom_div() {
         foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
             $_product = apply_filters('woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key);
             $review_order_html.= '<tr class="woocommerce-cart-form__cart-item">';
-            $review_order_html.= '<td class="product-thumbnail">'.$_product->get_image('thumbnail');
-            $review_order_html.= '</td>';
             $review_order_html.= '<td class="product-name">';
             $review_order_html.= '<strong>' . wp_kses_post($_product->get_name()) . '</strong> ';
             $review_order_html.= '<span class="product-quantity">' . sprintf('&times; %s', $cart_item['quantity']) . '</span>';
@@ -1212,3 +1209,90 @@ function add_div_after_custom_div() {
 }
 add_action('woocommerce_after_checkout_form', 'add_div_after_custom_div');
 //added the custom div on right side on checkout ends
+
+//WooCommerce Show Product Image @ Checkout Page starts
+add_filter( 'woocommerce_cart_item_name', 'ts_product_image_on_checkout', 10, 3 );
+function ts_product_image_on_checkout( $name, $cart_item, $cart_item_key ) {  
+
+    /* Return if not checkout page */
+    if ( ! is_checkout() ) {
+        return $name;
+    }
+
+    /* Get product object */
+    $_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+
+    /* Get product thumbnail */
+    $thumbnail = $_product->get_image();
+
+    /* Add wrapper to image and add some css */
+    $image = '<div class="ts-product-image" style="width: 52px; height: 45px; display: inline-block; padding-right: 7px; vertical-align: middle;">'
+                . $thumbnail .
+            '</div>';
+
+    /* Prepend image to name and return it */
+    return $image . $name;
+
+}
+//WooCommerce Show Product Image @ Checkout Page ends
+
+//removed the additional code from form-shipping.php and use it seaprately here starts
+add_action('woocommerce_checkout_payout', 'woocommerce_checkout_payout_fields');
+function woocommerce_checkout_payout_fields(){
+  $checkout = WC()->checkout();
+  ?>
+  <div class="woocommerce-billing-fields__field-wrapper">
+    <?php
+    $fields = $checkout->get_checkout_fields( 'billing' );
+
+    foreach ( $fields as $key => $field ) {
+      if($field['name']=='billing_payment_options' 
+        || $field['name']=='billing_paypal_email' 
+        || $field['name']=='billing_paypal_email_confirm'
+        || $field['name']=='billing_venmo_no'
+        || $field['name']=='billing_venmo_no_confirm')
+      {
+        woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );
+      }     
+    }
+    ?>
+  </div>
+  <?php
+}
+//removed the additional code from form-shipping.php and use it seaprately here ends
+
+// Save additional information after order placement starts
+function save_additional_information($order, $data)
+{
+    // Retrieve the custom field value
+    $custom_field_value = isset($_POST['additional_box']) ? sanitize_text_field($_POST['additional_box']) : '';
+    $remove_accounts_value = isset($_POST['remove_accounts']) ? sanitize_text_field($_POST['remove_accounts']) : '';
+    $customer_provided_note_value = isset($_POST['order_comments']) ? sanitize_text_field($_POST['order_comments']) : '';
+
+    // Save the custom field value to the order meta
+    if (!empty($custom_field_value)) {
+        $order->update_meta_data('additional_box', $custom_field_value);
+        $order->save();
+    }
+
+    if (!empty($remove_accounts_value)) {
+        $order->update_meta_data('remove_accounts', $remove_accounts_value);
+        $order->save();
+    }
+
+    if (!empty($customer_provided_note_value)) {
+        $order->update_meta_data('customer_provided_note', $customer_provided_note_value);
+        $order->save();
+    }
+
+}
+add_action('woocommerce_checkout_create_order', 'save_additional_information', 10, 2);
+// Save additional information after order placement ends
+
+// Display custom post meta value on the order admin page starts
+add_action('woocommerce_admin_order_data_after_shipping_address', 'display_custom_meta_on_order_detail', 10, 2); 
+function display_custom_meta_on_order_detail($order)
+{
+  echo '<p><strong>Customer Provided Note: </strong> ' . get_post_meta($order->get_id(), 'customer_provided_note', true) . '</p>';
+}
+// Display custom post meta value on the order admin page ends

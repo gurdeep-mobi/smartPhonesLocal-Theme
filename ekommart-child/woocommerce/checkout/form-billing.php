@@ -36,7 +36,14 @@ defined( 'ABSPATH' ) || exit;
 		$fields = $checkout->get_checkout_fields( 'billing' );
 
 		foreach ( $fields as $key => $field ) {
-			woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );
+			if($field['name']!='billing_payment_options' 
+	        && $field['name']!='billing_paypal_email' 
+	        && $field['name']!='billing_paypal_email_confirm'
+	        && $field['name']!='billing_venmo_no'
+	        && $field['name']!='billing_venmo_no_confirm')
+			{
+				woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );
+			}			
 		}
 		?>
 	</div>
@@ -86,8 +93,29 @@ defined( 'ABSPATH' ) || exit;
  </style>
 
  <script>
- 	jQuery('label[for="billing_payment_options_Check"]').html('image check');
- 	jQuery('label[for="billing_payment_options_PayPal"]').html('image paypal');
- 	jQuery('label[for="billing_payment_options_Venmo"]').html('image venmo');
+ 	// jQuery('label[for="billing_payment_options_Check"]').html('image check');
+ 	// jQuery('label[for="billing_payment_options_PayPal"]').html('image paypal');
+ 	// jQuery('label[for="billing_payment_options_Venmo"]').html('image venmo');
+
+ 	// Iterate over each label element
+	jQuery('label').each(function() {
+	  // Check the class and "for" attribute values
+	  if (jQuery(this).hasClass('radio') && jQuery(this).attr('for') === 'billing_payment_options_Check') {
+	    // Change the innerHTML of the label
+	    jQuery(this).html('image check'); // Replace 'New Text' with the desired content
+	  }
+
+	  if (jQuery(this).hasClass('radio') && jQuery(this).attr('for') === 'billing_payment_options_PayPal') {
+	    // Change the innerHTML of the label
+	    jQuery(this).html('image paypal'); // Replace 'New Text' with the desired content
+	  }
+
+	  if (jQuery(this).hasClass('radio') && jQuery(this).attr('for') === 'billing_payment_options_Venmo') {
+	    // Change the innerHTML of the label
+	    jQuery(this).html('image venmo'); // Replace 'New Text' with the desired content
+	  }
+
+	});
+
  </script>
 
