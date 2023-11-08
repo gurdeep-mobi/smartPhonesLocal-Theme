@@ -294,6 +294,7 @@ function misha_validate_checkout( $fields, $errors ){
         }
     }
 
+    /** removed this discount code on checkout page
     if($error_status == false && $discount_applicable == true){
         $product_id = '132841';
         $product_cart_id = WC()->cart->generate_cart_id( $product_id );
@@ -307,6 +308,7 @@ function misha_validate_checkout( $fields, $errors ){
             WC()->cart->add_to_cart( $product_id );
         }        
     }
+    **/
     
 }    
     
@@ -362,14 +364,25 @@ if( window.location.pathname == "/")
 
 jQuery('.header-container .aws-search-btn .aws-search-btn_icon').text('Search');
   
-jQuery('#billing_paypal_email_field').append('<span style="color: #ff0000">Quickest Payment Option - Please note that there is a $1.30 + 2.9% fee to receive funds using PayPal. The fee will be deducted from the payout amount.</span>')
+jQuery('#billing_paypal_email_field').append('<span style="color: #ff0000">Quickest Payment Option - Please note that there is a $0.30 + 2.9% fee to receive funds using PayPal. The fee will be deducted from the payout amount.</span>')
   
-jQuery('#billing_venmo_no_field').append('<span style="color: #ff0000">Quickest Payment Option - Please note that there is a $1.00 fee to receive funds using Venmo. The fee will be deducted from the payout amount.</span>')  
+jQuery('#billing_venmo_no_field').append('<span style="color: #ff0000">Quickest Payment Option - No Fee!</span>')  
   
 jQuery('#billing_paypal_email_field,#billing_paypal_email_confirm_field,#billing_venmo_no_field,#billing_venmo_no_confirm_field').find('span.optional').remove();   
 
 /*show paypal required fields */
 if(jQuery('body').hasClass('woocommerce-checkout')) {
+
+  var totalAmountCheck = parseInt(jQuery('.order-total').find('.woocommerce-Price-amount.amount').text().replace('$', '').replace(',', ''));
+
+  if(totalAmountCheck==750 || totalAmountCheck<750){
+    jQuery("#billing_payment_options option[value='PayPal']").remove();
+    jQuery("#billing_payment_options option[value='Check']").remove();
+  }
+  else{
+    jQuery("#billing_payment_options option[value='Venmo']").remove();
+  }
+
 if(jQuery('select[name="billing_payment_options"] option:selected').val() == 'PayPal') {     
   jQuery('#billing_paypal_email_field,#billing_paypal_email_confirm_field').show();         
 } else {
