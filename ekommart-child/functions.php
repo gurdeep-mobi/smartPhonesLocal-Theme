@@ -374,10 +374,9 @@ jQuery('#billing_paypal_email_field,#billing_paypal_email_confirm_field,#billing
 if(jQuery('body').hasClass('woocommerce-checkout')) {
 
   var totalAmountCheck = parseInt(jQuery('.order-total').find('.woocommerce-Price-amount.amount').text().replace('$', '').replace(',', ''));
-
+  
   if(totalAmountCheck==750 || totalAmountCheck<750){
-    jQuery("#billing_payment_options option[value='PayPal']").remove();
-    jQuery("#billing_payment_options option[value='Check']").remove();
+    //do nothing
   }
   else{
     jQuery("#billing_payment_options option[value='Venmo']").remove();
