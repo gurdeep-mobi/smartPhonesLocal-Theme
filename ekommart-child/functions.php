@@ -411,21 +411,25 @@ if(jQuery('select[name="billing_payment_options"] option:selected').val() == 'Pa
   jQuery('#billing_paypal_email_field,#billing_paypal_email_confirm_field').show();         
 } else {
   jQuery('#billing_paypal_email_field,#billing_paypal_email_confirm_field').hide();
+  jQuery('#billing_paypal_email,#billing_paypal_email_confirm').val('');   
 }
 if(jQuery('select[name="billing_payment_options"] option:selected').val() == 'Venmo') {
   jQuery('#billing_venmo_no_field,#billing_venmo_no_confirm_field').show();       
 } else {
   jQuery('#billing_venmo_no_field,#billing_venmo_no_confirm_field').hide();
+  jQuery('#billing_venmo_no,#billing_venmo_no_confirm').val('');   
 }
 if(jQuery('select[name="billing_payment_options"] option:selected').val() == 'Gift Card') {
   jQuery('#billing_gift_card_email_field,#billing_gift_card_email_confirm_field').show();       
 } else {
   jQuery('#billing_gift_card_email_field,#billing_gift_card_email_confirm_field').hide();
+  jQuery('#billing_gift_card_email,#billing_gift_card_email_confirm').val('');   
 }
 if(jQuery('select[name="billing_payment_options"] option:selected').val() == 'Check') {
   jQuery('#billing_check_name_field').show();       
 } else {
   jQuery('#billing_check_name_field').hide();
+  jQuery('#billing_check_name').val('');   
 }
 
 jQuery('select[name="billing_payment_options"]').on('change', function() {
@@ -434,21 +438,27 @@ jQuery('select[name="billing_payment_options"]').on('change', function() {
     jQuery('#billing_paypal_email_field,#billing_paypal_email_confirm_field').show();           
   } else {
     jQuery('#billing_paypal_email_field,#billing_paypal_email_confirm_field').hide();
+    jQuery('#billing_paypal_email,#billing_paypal_email_confirm').val('');   
+    
+    
   }
   if(selectVal == 'Venmo') {
     jQuery('#billing_venmo_no_field,#billing_venmo_no_confirm_field').show();           
   } else {
     jQuery('#billing_venmo_no_field,#billing_venmo_no_confirm_field').hide();
+    jQuery('#billing_venmo_no,#billing_venmo_no_confirm').val('');  
   }  
   if(selectVal == 'Gift Card') {
     jQuery('#billing_gift_card_email_field,#billing_gift_card_email_confirm_field').show();           
   } else {
     jQuery('#billing_gift_card_email_field,#billing_gift_card_email_confirm_field').hide();
+    jQuery('#billing_gift_card_email,#billing_gift_card_email_confirm').val('');  
   }  
   if(selectVal == 'Check') {
     jQuery('#billing_check_name_field').show();           
   } else {
     jQuery('#billing_check_name_field').hide();
+    jQuery('#billing_check_name').val('');  
   }    
 });
 var totalAmuont = parseInt(jQuery('.order-total').find('.woocommerce-Price-amount.amount').text().replace('$', ''));
