@@ -407,40 +407,42 @@ if(jQuery('body').hasClass('woocommerce-checkout')) {
     jQuery("#billing_payment_options option[value='Venmo']").remove();
   }
 
-if(jQuery('select[name="billing_payment_options"] option:selected').val() == 'PayPal') {     
+if(jQuery('input[name="billing_payment_options"]:checked').val() == 'PayPal') {     
   jQuery('#billing_paypal_email_field,#billing_paypal_email_confirm_field').show();         
 } else {
   jQuery('#billing_paypal_email_field,#billing_paypal_email_confirm_field').hide();
   jQuery('#billing_paypal_email,#billing_paypal_email_confirm').val('');   
 }
-if(jQuery('select[name="billing_payment_options"] option:selected').val() == 'Venmo') {
+if(jQuery('input[name="billing_payment_options"]:checked').val() == 'Venmo') {
   jQuery('#billing_venmo_no_field,#billing_venmo_no_confirm_field').show();       
 } else {
   jQuery('#billing_venmo_no_field,#billing_venmo_no_confirm_field').hide();
   jQuery('#billing_venmo_no,#billing_venmo_no_confirm').val('');   
 }
-if(jQuery('select[name="billing_payment_options"] option:selected').val() == 'Gift Card') {
+if(jQuery('input[name="billing_payment_options"]:checked').val() == 'Gift Card') {
   jQuery('#billing_gift_card_email_field,#billing_gift_card_email_confirm_field').show();       
 } else {
   jQuery('#billing_gift_card_email_field,#billing_gift_card_email_confirm_field').hide();
   jQuery('#billing_gift_card_email,#billing_gift_card_email_confirm').val('');   
 }
-if(jQuery('select[name="billing_payment_options"] option:selected').val() == 'Check') {
+if(jQuery('input[name="billing_payment_options"]:checked').val() == 'Check') {
   jQuery('#billing_check_name_field').show();       
 } else {
   jQuery('#billing_check_name_field').hide();
   jQuery('#billing_check_name').val('');   
 }
 
-jQuery('select[name="billing_payment_options"]').on('change', function() {
-  var selectVal = jQuery(this).find('option:selected').val();
+//jQuery('select[name="billing_payment_options"]').on('change', function() {
+  //var selectVal = jQuery(this).find('option:selected').val();
+
+jQuery('input[name="billing_payment_options"]').on('change', function() {
+  var selectVal = jQuery(this).val();
+  console.log(selectVal);
   if(selectVal == 'PayPal') {
     jQuery('#billing_paypal_email_field,#billing_paypal_email_confirm_field').show();           
   } else {
     jQuery('#billing_paypal_email_field,#billing_paypal_email_confirm_field').hide();
-    jQuery('#billing_paypal_email,#billing_paypal_email_confirm').val('');   
-    
-    
+    jQuery('#billing_paypal_email,#billing_paypal_email_confirm').val('');      
   }
   if(selectVal == 'Venmo') {
     jQuery('#billing_venmo_no_field,#billing_venmo_no_confirm_field').show();           
