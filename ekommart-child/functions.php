@@ -293,6 +293,27 @@ function misha_validate_checkout( $fields, $errors ){
             $errors->add( 'validation', 'Venmo account phone number should match confirm venmo account phone number.' );        
         }
     }
+    elseif($fields['billing_payment_options'] == 'Gift Card'){
+        $discount_applicable = true;
+        if ( empty($fields[ 'billing_gift_card_email' ] ) ) {
+            $error_status = true;
+            $errors->add( 'validation', 'Please provide your email address' );
+        }elseif($fields[ 'billing_gift_card_email' ]!= $fields['billing_gift_card_email_confirm']){            
+            $error_status = true;
+            $errors->add( 'validation', 'Email address should match confirm email address.' );        
+        }
+    }
+    elseif($fields['billing_payment_options'] == 'Check'){
+        $discount_applicable = true;
+        if ( empty($fields[ 'billing_check_name' ] ) ) {
+            $error_status = true;
+            $errors->add( 'validation', 'Please enter your correct name on check.' );   
+        }
+    }
+    else{
+
+    }
+ 
 
     /** removed this discount code on checkout page
     if($error_status == false && $discount_applicable == true){
@@ -368,7 +389,11 @@ jQuery('#billing_paypal_email_field').append('<span style="color: #ff0000">Quick
   
 jQuery('#billing_venmo_no_field').append('<span style="color: #ff0000">Quickest Payment Option - No Fee!</span>')  
   
-jQuery('#billing_paypal_email_field,#billing_paypal_email_confirm_field,#billing_venmo_no_field,#billing_venmo_no_confirm_field').find('span.optional').remove();   
+jQuery('#billing_check_name_field').append('<span style="color: #ff0000">Name on Check</span>')  
+  
+jQuery('#billing_gift_card_email_field').append('<span style="color: #ff0000">Get up to a 10% bonus in additional funds. Redeem your funds to retailers such as Amazon, Target, Walmart, Starbucks, Nike, and over 300 leading digital gift card brands. After mailing in your device and order is completed, a link to our gift card portal will be emailed to you.</span>')  
+  
+jQuery('#billing_paypal_email_field,#billing_paypal_email_confirm_field,#billing_venmo_no_field,#billing_venmo_no_confirm_field,#billing_check_name_field,#billing_gift_card_email_field,#billing_gift_card_email_confirm_field').find('span.optional').remove();   
 
 /*show paypal required fields */
 if(jQuery('body').hasClass('woocommerce-checkout')) {
@@ -392,6 +417,17 @@ if(jQuery('select[name="billing_payment_options"] option:selected').val() == 'Ve
 } else {
   jQuery('#billing_venmo_no_field,#billing_venmo_no_confirm_field').hide();
 }
+if(jQuery('select[name="billing_payment_options"] option:selected').val() == 'Gift Card') {
+  jQuery('#billing_gift_card_email_field,#billing_gift_card_email_confirm_field').show();       
+} else {
+  jQuery('#billing_gift_card_email_field,#billing_gift_card_email_confirm_field').hide();
+}
+if(jQuery('select[name="billing_payment_options"] option:selected').val() == 'Check') {
+  jQuery('#billing_check_name_field').show();       
+} else {
+  jQuery('#billing_check_name_field').hide();
+}
+
 jQuery('select[name="billing_payment_options"]').on('change', function() {
   var selectVal = jQuery(this).find('option:selected').val();
   if(selectVal == 'PayPal') {
@@ -403,6 +439,16 @@ jQuery('select[name="billing_payment_options"]').on('change', function() {
     jQuery('#billing_venmo_no_field,#billing_venmo_no_confirm_field').show();           
   } else {
     jQuery('#billing_venmo_no_field,#billing_venmo_no_confirm_field').hide();
+  }  
+  if(selectVal == 'Gift Card') {
+    jQuery('#billing_gift_card_email_field,#billing_gift_card_email_confirm_field').show();           
+  } else {
+    jQuery('#billing_gift_card_email_field,#billing_gift_card_email_confirm_field').hide();
+  }  
+  if(selectVal == 'Check') {
+    jQuery('#billing_check_name_field').show();           
+  } else {
+    jQuery('#billing_check_name_field').hide();
   }    
 });
 var totalAmuont = parseInt(jQuery('.order-total').find('.woocommerce-Price-amount.amount').text().replace('$', ''));
