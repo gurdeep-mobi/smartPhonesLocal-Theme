@@ -450,10 +450,10 @@ var venmoImage = 'http://localhost/smartphonespro/wp-content/uploads/2020/02/fin
 var giftCardImage = 'http://localhost/smartphonespro/wp-content/uploads/2020/02/giftbox.png';
 
 // Set images dynamically
-jQuery('#billing_payment_options_Check').next('.radio').prepend('<div class="check-radio-image"><img src="' + checkImage + '" alt="Check" class=""></div>');
-jQuery('#billing_payment_options_PayPal').next('.radio').prepend('<div class="paypal-radio-image"><img src="' + paypalImage + '" alt="PayPal" class=""></div></div');
-jQuery('#billing_payment_options_Venmo').next('.radio').prepend('<div class="venmo-radio-image"><img src="' + venmoImage + '" alt="Venmo" class=""></div>');
-jQuery('#billing_payment_options_GiftCard').next('.radio').prepend('<div class="giftcard-radio-image"><img src="' + giftCardImage + '" alt="Gift Card" class=""></div>');
+jQuery('#billing_payment_options_Check').next('.radio').prepend('<img src="' + checkImage + '" alt="Check" class="radio-image check-radio-image" style="width:30px">');
+jQuery('#billing_payment_options_PayPal').next('.radio').prepend('<img src="' + paypalImage + '" alt="PayPal" class="radio-image paypal-radio-image" style="width:30px">');
+jQuery('#billing_payment_options_Venmo').next('.radio').prepend('<img src="' + venmoImage + '" alt="Venmo" class="radio-image venmo-radio-image" style="width:30px">');
+jQuery('#billing_payment_options_GiftCard').next('.radio').prepend('<img src="' + giftCardImage + '" alt="Gift Card" class="radio-image giftcard-radio-image" style="width:30px">');
 
 
 //jQuery('select[name="billing_payment_options"]').on('change', function() {
