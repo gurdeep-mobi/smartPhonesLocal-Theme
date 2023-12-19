@@ -432,6 +432,17 @@ if(jQuery('input[name="billing_payment_options"]:checked').val() == 'Check') {
   jQuery('#billing_check_name').val('');   
 }
 
+var checkImage = 'http://localhost/smartphonespro/wp-content/uploads/2020/02/Screenshot-2023-12-19-121728.png';
+var paypalImage = 'http://localhost/smartphonespro/wp-content/uploads/2020/02/Screenshot-2023-12-19-121639.png';
+var venmoImage = 'http://localhost/smartphonespro/wp-content/uploads/2020/02/Screenshot-2023-12-19-121655.png';
+var giftCardImage = 'http://localhost/smartphonespro/wp-content/uploads/2020/02/Screenshot-2023-12-19-121709.png';
+
+// Set images dynamically
+jQuery('#billing_payment_options_Check').next('.radio').prepend('<img src="' + checkImage + '" alt="Check" class="radio-image check-radio-image">');
+jQuery('#billing_payment_options_PayPal').next('.radio').prepend('<img src="' + paypalImage + '" alt="PayPal" class="radio-image paypal-radio-image">');
+jQuery('#billing_payment_options_Venmo').next('.radio').prepend('<img src="' + venmoImage + '" alt="Venmo" class="radio-image venmo-radio-image">');
+jQuery('#billing_payment_options_GiftCard').next('.radio').prepend('<img src="' + giftCardImage + '" alt="Gift Card" class="radio-image giftcard-radio-image">');
+
 //jQuery('select[name="billing_payment_options"]').on('change', function() {
   //var selectVal = jQuery(this).find('option:selected').val();
 
