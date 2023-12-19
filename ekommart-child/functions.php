@@ -293,7 +293,7 @@ function misha_validate_checkout( $fields, $errors ){
             $errors->add( 'validation', 'Venmo account phone number should match confirm venmo account phone number.' );        
         }
     }
-    elseif($fields['billing_payment_options'] == 'Gift Card'){
+    elseif($fields['billing_payment_options'] == 'GiftCard'){
         $discount_applicable = true;
         if ( empty($fields[ 'billing_gift_card_email' ] ) ) {
             $error_status = true;
@@ -419,7 +419,7 @@ if(jQuery('input[name="billing_payment_options"]:checked').val() == 'Venmo') {
   jQuery('#billing_venmo_no_field,#billing_venmo_no_confirm_field').hide();
   jQuery('#billing_venmo_no,#billing_venmo_no_confirm').val('');   
 }
-if(jQuery('input[name="billing_payment_options"]:checked').val() == 'Gift Card') {
+if(jQuery('input[name="billing_payment_options"]:checked').val() == 'GiftCard') {
   jQuery('#billing_gift_card_email_field,#billing_gift_card_email_confirm_field').show();       
 } else {
   jQuery('#billing_gift_card_email_field,#billing_gift_card_email_confirm_field').hide();
@@ -450,7 +450,7 @@ jQuery('input[name="billing_payment_options"]').on('change', function() {
     jQuery('#billing_venmo_no_field,#billing_venmo_no_confirm_field').hide();
     jQuery('#billing_venmo_no,#billing_venmo_no_confirm').val('');  
   }  
-  if(selectVal == 'Gift Card') {
+  if(selectVal == 'GiftCard') {
     jQuery('#billing_gift_card_email_field,#billing_gift_card_email_confirm_field').show();           
   } else {
     jQuery('#billing_gift_card_email_field,#billing_gift_card_email_confirm_field').hide();
