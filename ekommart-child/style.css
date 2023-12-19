@@ -2894,5 +2894,22 @@ a.cart-contents {
     padding: 2.2906835em 1.41575em;
 }
 
+.check-radio-image, .paypal-radio-image, .venmo-radio-image, .giftcard-radio-image {
+    position: relative;
+    left: 0px;
+    width: 103px;
+    height: 40px;
+    top: 26px;
+    object-fit: cover;
+}
 
+#billing_payment_options_Check, #billing_payment_options_PayPal, #billing_payment_options_Venmo, #billing_payment_options_GiftCard {
+ 	    display: inline-block;
+    visibility: hidden;
+    width: 19%;
+}
 
+p#billing_payment_options_field{
+	display: flex;
+	justify-content: center;
+}
