@@ -2934,6 +2934,10 @@ label.radio:hover{
     gap: 20px;
 }
 
+label[for="billing_payment_options_Check"] {
+    display: none;
+}
+
 @media(max-width:1200px){
 	label.radio{
 		width:250px;
