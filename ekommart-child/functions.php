@@ -297,10 +297,10 @@ function misha_validate_checkout( $fields, $errors ){
         $discount_applicable = true;
         if ( empty($fields[ 'billing_gift_card_email' ] ) ) {
             $error_status = true;
-            $errors->add( 'validation', 'Please provide your email address' );
+            $errors->add( 'validation', 'Please provide your gift card email address' );
         }elseif($fields[ 'billing_gift_card_email' ]!= $fields['billing_gift_card_email_confirm']){            
             $error_status = true;
-            $errors->add( 'validation', 'Email address should match confirm email address.' );        
+            $errors->add( 'validation', 'GiftCard email address should match confirm GiftCard email address.' );        
         }
     }
     elseif($fields['billing_payment_options'] == 'Check'){
