@@ -389,7 +389,7 @@ jQuery('#billing_paypal_email_field').append('<span style="color: #ff0000">Quick
   
 jQuery('#billing_venmo_no_field').append('<span style="color: #ff0000">Quickest Payment Option - No Fee!</span>');
   
-jQuery('#billing_check_name_field').append('<span style="color: #ff0000">Name on Check</span>'); 
+//jQuery('#billing_check_name_field').append('<span style="color: #ff0000">Name on Check</span>'); 
   
 jQuery('#billing_gift_card_email_field').append('<span style="color: #ff0000">Get up to a 10% bonus in additional funds. Redeem your funds to retailers such as Amazon, Target, Walmart, Starbucks, Nike, and over 300 leading digital gift card brands. After mailing in your device and order is completed, a link to our gift card portal will be emailed to you.</span>');  
   
