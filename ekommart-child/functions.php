@@ -444,10 +444,10 @@ else {
     jQuery('#billing_check_name').val('');   
 }
 
-var checkImage = 'http://localhost/smartphonespro/wp-content/uploads/2020/02/bank.png';
-var paypalImage = 'http://localhost/smartphonespro/wp-content/uploads/2020/02/paypal.png';
-var venmoImage = 'http://localhost/smartphonespro/wp-content/uploads/2020/02/finance.png';
-var giftCardImage = 'http://localhost/smartphonespro/wp-content/uploads/2020/02/giftbox.png';
+var checkImage = 'https://smartphonesstg.wpengine.com/wp-content/uploads/2020/02/bank.png';
+var paypalImage = 'https://smartphonesstg.wpengine.com/wp-content/uploads/2020/02/paypal.png';
+var venmoImage = 'https://smartphonesstg.wpengine.com/wp-content/uploads/2020/02/finance.png';
+var giftCardImage = 'https://smartphonesstg.wpengine.com/wp-content/uploads/2020/02/giftbox.png';
 
 // Set images dynamically
 jQuery('#billing_payment_options_Check').next('.radio').prepend('<img src="' + checkImage + '" alt="Check" class="radio-image check-radio-image" style="width:30px">');
