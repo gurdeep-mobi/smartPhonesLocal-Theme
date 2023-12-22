@@ -2927,7 +2927,7 @@ label.radio:hover{
 	background-color: lightgrey;
 }
 
-.woocommerce-input-wrapper{
+#billing_payment_options_field .woocommerce-input-wrapper{
 	display: flex;
     flex-wrap: wrap;
     justify-content: center;
