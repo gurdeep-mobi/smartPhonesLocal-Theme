@@ -414,34 +414,46 @@ jQuery('#billing_payment_options_Check').next('.radio').css('background-color', 
 
 if(jQuery('input[name="billing_payment_options"]:checked').val() == 'PayPal') {    
     jQuery('#billing_payment_options_PayPal').next('.radio').css('background-color', 'lightgray'); 
-    jQuery('#billing_paypal_email_field,#billing_paypal_email_confirm_field').show();         
-} else {
-  jQuery('#billing_paypal_email_field,#billing_paypal_email_confirm_field').hide();
-  jQuery('#billing_paypal_email,#billing_paypal_email_confirm').val('');   
-}
-if(jQuery('input[name="billing_payment_options"]:checked').val() == 'Venmo') {
-    jQuery('#billing_payment_options_Venmo').next('.radio').css('background-color', 'lightgray'); 
-    jQuery('#billing_venmo_no_field,#billing_venmo_no_confirm_field').show();       
+    jQuery('#billing_paypal_email_field,#billing_paypal_email_confirm_field').show();   
+    billingInputVlidationPaypal();      
 } 
 else {
-  jQuery('#billing_venmo_no_field,#billing_venmo_no_confirm_field').hide();
-  jQuery('#billing_venmo_no,#billing_venmo_no_confirm').val('');   
+  jQuery('#billing_paypal_email_field,#billing_paypal_email_confirm_field').hide();
+  jQuery('#billing_paypal_email,#billing_paypal_email_confirm').val('');  
+  billingInputVlidationPaypal();   
 }
+
+if(jQuery('input[name="billing_payment_options"]:checked').val() == 'Venmo') {
+    jQuery('#billing_payment_options_Venmo').next('.radio').css('background-color', 'lightgray'); 
+    jQuery('#billing_venmo_no_field,#billing_venmo_no_confirm_field').show();    
+    billingInputVlidationVenmo();     
+} 
+else {
+    jQuery('#billing_venmo_no_field,#billing_venmo_no_confirm_field').hide();
+    jQuery('#billing_venmo_no,#billing_venmo_no_confirm').val('');   
+    billingInputVlidationVenmo();  
+}
+
 if(jQuery('input[name="billing_payment_options"]:checked').val() == 'Gift Card') {
     jQuery('#billing_payment_options_GiftCard').next('.radio').css('background-color', 'lightgray'); 
-    jQuery('#billing_gift_card_email_field,#billing_gift_card_email_confirm_field').show();       
+    jQuery('#billing_gift_card_email_field,#billing_gift_card_email_confirm_field').show();  
+    billingInputVlidationGiftcard();
 } 
 else {
   jQuery('#billing_gift_card_email_field,#billing_gift_card_email_confirm_field').hide();
   jQuery('#billing_gift_card_email,#billing_gift_card_email_confirm').val('');   
+  billingInputVlidationGiftcard();
 }
+
 if(jQuery('input[name="billing_payment_options"]:checked').val() == 'Check') {
     jQuery('#billing_payment_options_Check').next('.radio').css('background-color', 'lightgray'); 
-    jQuery('#billing_check_name_field').show();       
+    jQuery('#billing_check_name_field').show();
+    billingInputVlidationCheck();      
 } 
 else {
     jQuery('#billing_check_name_field').hide();
-    jQuery('#billing_check_name').val('');   
+    jQuery('#billing_check_name').val('');  
+    billingInputVlidationCheck(); 
 }
 
 var checkImage = 'https://smartphonesstg.wpengine.com/wp-content/uploads/2020/02/bank.png';
@@ -460,43 +472,82 @@ jQuery('#billing_payment_options_GiftCard').next('.radio').prepend('<img src="' 
   //var selectVal = jQuery(this).find('option:selected').val();
 
 jQuery('input[name="billing_payment_options"]').on('change', function() {
-     var selectVal = jQuery(this).val();
+
+    var selectVal = jQuery(this).val();
 
     jQuery('#billing_payment_options_PayPal').next('.radio').css('background-color', ''); 
     jQuery('#billing_payment_options_Venmo').next('.radio').css('background-color', '');
     jQuery('#billing_payment_options_GiftCard').next('.radio').css('background-color', ''); 
     jQuery('#billing_payment_options_Check').next('.radio').css('background-color', ''); 
   
-  if(selectVal == 'PayPal') {
-    jQuery('#billing_paypal_email_field,#billing_paypal_email_confirm_field').show();  
-    jQuery('#billing_payment_options_PayPal').next('.radio').css('background-color', 'lightgray');
-            
-  } else {
-    jQuery('#billing_paypal_email_field,#billing_paypal_email_confirm_field').hide();
-    jQuery('#billing_paypal_email,#billing_paypal_email_confirm').val('');      
-  }
-  if(selectVal == 'Venmo') {
-    jQuery('#billing_venmo_no_field,#billing_venmo_no_confirm_field').show(); 
-    jQuery('#billing_payment_options_Venmo').next('.radio').css('background-color', 'lightgray');          
-  } else {
-    jQuery('#billing_venmo_no_field,#billing_venmo_no_confirm_field').hide();
-    jQuery('#billing_venmo_no,#billing_venmo_no_confirm').val('');  
-  }  
-  if(selectVal == 'GiftCard') {
-    jQuery('#billing_gift_card_email_field,#billing_gift_card_email_confirm_field').show();   
-    jQuery('#billing_payment_options_GiftCard').next('.radio').css('background-color', 'lightgray');        
-  } else {
-    jQuery('#billing_gift_card_email_field,#billing_gift_card_email_confirm_field').hide();
-    jQuery('#billing_gift_card_email,#billing_gift_card_email_confirm').val('');  
-  }  
-  if(selectVal == 'Check') {
-    jQuery('#billing_check_name_field').show();      
-    jQuery('#billing_payment_options_Check').next('.radio').css('background-color', 'lightgray');     
-  } else {
-    jQuery('#billing_check_name_field').hide();
-    jQuery('#billing_check_name').val('');  
-  }    
+    if(selectVal == 'PayPal') {
+        jQuery('#billing_paypal_email_field,#billing_paypal_email_confirm_field').show();  
+        jQuery('#billing_payment_options_PayPal').next('.radio').css('background-color', 'lightgray');
+        billingInputVlidationPaypal();            
+    } 
+    else {
+        jQuery('#billing_paypal_email_field,#billing_paypal_email_confirm_field').hide();
+        jQuery('#billing_paypal_email,#billing_paypal_email_confirm').val('');   
+        billingInputVlidationPaypal();     
+    }
+
+    if(selectVal == 'Venmo') {
+        jQuery('#billing_venmo_no_field,#billing_venmo_no_confirm_field').show(); 
+        jQuery('#billing_payment_options_Venmo').next('.radio').css('background-color', 'lightgray');    
+        billingInputVlidationVenmo();      
+    } 
+    else {
+        jQuery('#billing_venmo_no_field,#billing_venmo_no_confirm_field').hide();
+        jQuery('#billing_venmo_no,#billing_venmo_no_confirm').val('');  
+        billingInputVlidationVenmo();  
+    }  
+
+    if(selectVal == 'GiftCard') {
+        jQuery('#billing_gift_card_email_field,#billing_gift_card_email_confirm_field').show();   
+        jQuery('#billing_payment_options_GiftCard').next('.radio').css('background-color', 'lightgray');  
+        billingInputVlidationGiftcard();      
+    } 
+    else {
+        jQuery('#billing_gift_card_email_field,#billing_gift_card_email_confirm_field').hide();
+        jQuery('#billing_gift_card_email,#billing_gift_card_email_confirm').val('');  
+        billingInputVlidationGiftcard(); 
+    }  
+
+    if(selectVal == 'Check') {
+        jQuery('#billing_check_name_field').show();      
+        jQuery('#billing_payment_options_Check').next('.radio').css('background-color', 'lightgray');  
+        billingInputVlidationCheck();  
+    } 
+    else {
+        jQuery('#billing_check_name_field').hide();
+        jQuery('#billing_check_name').val('');  
+        billingInputVlidationCheck();
+    }   
+
 });
+
+jQuery("#billing_check_name_field").on("input", function() {
+    billingInputVlidationCheck();
+});
+jQuery("#billing_venmo_no_field").on("input", function() {
+    billingInputVlidationVenmo();
+});
+jQuery("#billing_venmo_no_confirm_field").on("input", function() {
+    billingInputVlidationVenmo();
+});
+jQuery("#billing_gift_card_email_field").on("input", function() {
+    billingInputVlidationGiftcard();
+});
+jQuery("#billing_gift_card_email_confirm_field").on("input", function() {
+    billingInputVlidationGiftcard();
+});
+jQuery("#billing_paypal_email_field").on("input", function() {
+    billingInputVlidationPaypal();
+});
+jQuery("#billing_paypal_email_confirm_field").on("input", function() {
+    billingInputVlidationPaypal();
+});
+
 var totalAmuont = parseInt(jQuery('.order-total').find('.woocommerce-Price-amount.amount').text().replace('$', ''));
 if(totalAmuont < 15 || jQuery(document).find('span[data-category-checkout="true"]').hasClass('remove-fields')) {
   jQuery('#additional_box_field').hide();
@@ -518,6 +569,62 @@ jQuery(window).scroll(function(){
 jQuery('#mobileSearchIcon').on('click', function(){
   jQuery(".header-container .header-bottom").slideToggle();
 })  
+
+
+function billingInputVlidationPaypal() {
+
+    if (jQuery('#billing_paypal_email').val() === '') {
+        jQuery('#billing_paypal_email').css('box-shadow', 'inset 2px 0 0 #e2401c');
+    } else {
+        jQuery('#billing_paypal_email').css('box-shadow', '');
+    }
+
+    if (jQuery('#billing_paypal_email_confirm').val() === '') {
+        jQuery('#billing_paypal_email_confirm').css('box-shadow', 'inset 2px 0 0 #e2401c');
+    } else {
+        jQuery('#billing_paypal_email_confirm').css('box-shadow', '');
+    }  
+}
+
+function billingInputVlidationVenmo() {
+
+    if (jQuery('#billing_venmo_no').val() === '') {
+        jQuery('#billing_venmo_no').css('box-shadow', 'inset 2px 0 0 #e2401c');
+    } else {
+        jQuery('#billing_venmo_no').css('box-shadow', '');
+    }
+
+    if (jQuery('#billing_venmo_no_confirm').val() === '') {
+        jQuery('#billing_venmo_no_confirm').css('box-shadow', 'inset 2px 0 0 #e2401c');
+    } else {
+        jQuery('#billing_venmo_no_confirm').css('box-shadow', '');
+    }
+}
+
+function billingInputVlidationGiftcard() {
+
+    if (jQuery('#billing_gift_card_email').val() === '') {
+        jQuery('#billing_gift_card_email').css('box-shadow', 'inset 2px 0 0 #e2401c');
+    } else {
+        jQuery('#billing_gift_card_email').css('box-shadow', '');
+    }
+
+    if (jQuery('#billing_gift_card_email_confirm').val() === '') {
+        jQuery('#billing_gift_card_email_confirm').css('box-shadow', 'inset 2px 0 0 #e2401c');
+    } else {
+        jQuery('#billing_gift_card_email_confirm').css('box-shadow', '');
+    }
+
+}
+
+function billingInputVlidationCheck() {
+
+    if (jQuery('#billing_check_name').val() === '') {
+        jQuery('#billing_check_name').css('box-shadow', 'inset 2px 0 0 #e2401c');
+    } else {
+        jQuery('#billing_check_name').css('box-shadow', '');
+    }
+}
     
 </script>
     <?php
