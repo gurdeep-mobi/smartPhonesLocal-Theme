@@ -274,6 +274,12 @@ function misha_validate_checkout( $fields, $errors ){
     $error_status = false;
     $discount_applicable = false;
 
+    if (empty($fields['billing_payment_options'])) {
+        // If empty, set an error status and display the error at the top
+        $error_message = '<strong>' . __('Billing / Mailing Detail is a required field.', 'your-text-domain') . '</strong>';
+        wc_add_notice($error_message, 'error');
+    }
+
     if($fields['billing_payment_options'] == 'PayPal' ){
         $discount_applicable = true;
         if ( empty($fields[ 'billing_paypal_email' ] ) ) {
