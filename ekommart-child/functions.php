@@ -276,7 +276,7 @@ function misha_validate_checkout( $fields, $errors ){
 
     if (empty($fields['billing_payment_options'])) {
         // If empty, set an error status and display the error at the top
-        $error_message = '<strong>' . __('Billing / Mailing Detail is a required field.', 'your-text-domain') . '</strong>';
+        $error_message =  __('<strong>Billing / Mailing Detail </strong> is a required field.', 'your-text-domain');
         wc_add_notice($error_message, 'error');
     }
 
