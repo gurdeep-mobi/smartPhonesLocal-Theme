@@ -410,7 +410,9 @@ if(jQuery('body').hasClass('woocommerce-checkout')) {
     //do nothing
   }
   else{
-    jQuery("#billing_payment_options option[value='Venmo']").remove();
+    //jQuery("#billing_payment_options option[value='Venmo']").remove();
+    jQuery("input[name='billing_payment_options'][value='Venmo']").remove();
+    jQuery("label[for='billing_payment_options_Venmo']").remove();
   }
 
 jQuery('#billing_payment_options_PayPal').next('.radio').css('background-color', ''); 
