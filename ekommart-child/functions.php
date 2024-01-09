@@ -402,6 +402,15 @@ jQuery('.header-container .aws-search-btn .aws-search-btn_icon').text('Search');
 jQuery('#billing_paypal_email_field,#billing_paypal_email_confirm_field,#billing_venmo_no_field,#billing_venmo_no_confirm_field,#billing_check_name_field,#billing_gift_card_email_field,#billing_gift_card_email_confirm_field').find('span.optional').remove();   
 jQuery('#billing_country_field .woocommerce-input-wrapper strong').contents().unwrap();
 
+jQuery(document).ready(function() {
+    // Select each radio input within the span
+    jQuery('.woocommerce-input-wrapper input[type="radio"]').each(function() {
+        // Create a new div and append the radio input and its label to it
+        var newDiv = jQuery('<div class="checkout-custom-radio-wrapper"></div>').appendTo(jQuery(this).parent());
+        jQuery(this).add(jQuery('label[for="' + jQuery(this).attr('id') + '"]')).appendTo(newDiv);
+    });
+});
+
 /*show paypal required fields */
 if(jQuery('body').hasClass('woocommerce-checkout')) {
 
@@ -420,10 +429,10 @@ if(jQuery('body').hasClass('woocommerce-checkout')) {
 var selectVal = jQuery('input[name="billing_payment_options"]:checked').val();
 billingSectionEvents(selectVal);
 
-var checkImage = 'https://smartphonesstg.wpengine.com/wp-content/uploads/2020/02/bank.png';
+var checkImage = 'https://smartphonesstg.wpengine.com/wp-content/uploads/2020/02/check.png';
 var paypalImage = 'https://smartphonesstg.wpengine.com/wp-content/uploads/2020/02/paypal.png';
-var venmoImage = 'https://smartphonesstg.wpengine.com/wp-content/uploads/2020/02/finance.png';
-var giftCardImage = 'https://smartphonesstg.wpengine.com/wp-content/uploads/2020/02/giftbox.png';
+var venmoImage = 'https://smartphonesstg.wpengine.com/wp-content/uploads/2020/02/venmo.png';
+var giftCardImage = 'https://smartphonesstg.wpengine.com/wp-content/uploads/2020/02/giftcard.png';
 
 // Set images dynamically
 jQuery('#billing_payment_options_Check').next('.radio').prepend('<img src="' + checkImage + '" alt="Check" class="radio-image check-radio-image" style="width:30px">');
