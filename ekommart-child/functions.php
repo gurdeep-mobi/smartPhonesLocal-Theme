@@ -429,10 +429,10 @@ if(jQuery('body').hasClass('woocommerce-checkout')) {
 var selectVal = jQuery('input[name="billing_payment_options"]:checked').val();
 billingSectionEvents(selectVal);
 
-var checkImage = 'https://smartphonesstg.wpengine.com/wp-content/uploads/2020/02/check.png';
+var checkImage = 'https://smartphonesstg.wpengine.com/wp-content/uploads/2020/02/check-2.png';
 var paypalImage = 'https://smartphonesstg.wpengine.com/wp-content/uploads/2020/02/paypal.png';
 var venmoImage = 'https://smartphonesstg.wpengine.com/wp-content/uploads/2020/02/venmo.png';
-var giftCardImage = 'https://smartphonesstg.wpengine.com/wp-content/uploads/2020/02/giftcard.png';
+var giftCardImage = 'https://smartphonesstg.wpengine.com/wp-content/uploads/2020/02/gift-2.png';
 
 // Set images dynamically
 jQuery('#billing_payment_options_Check').next('.radio').prepend('<img src="' + checkImage + '" alt="Check" class="radio-image check-radio-image" style="width:30px">');
