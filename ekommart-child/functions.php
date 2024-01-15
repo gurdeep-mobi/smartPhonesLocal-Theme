@@ -498,7 +498,7 @@ jQuery('#mobileSearchIcon').on('click', function(){
 function billingSectionEvents(selectVal){
 
     var venmotext = 'Quickest Payment Option - No Fee!';
-    var giftcardtext = 'Get up to a 10% bonus in additional funds. Redeem your funds to retailers such as Amazon, Target, Walmart, Starbucks, Nike, and over 300 leading digital gift card brands. After mailing in your device and order is completed, a link to our gift card portal will be emailed to you.';
+    var giftcardtext = 'Earn extra funds! Redeem for Prepaid Visa/Mastercard or top retailers like Amazon, Target, Walmart, Starbucks, Nike, and 300+ digital gift card brands. After sending in your device and order is completed, you’ll receive a gift card portal link via email.';
     var paypaltext ='Quickest Payment Option - Please note that there is a $0.30 + 2.9% fee to receive funds using PayPal. The fee will be deducted from the payout amount.';
     var checknametext = '';
 
@@ -1288,3 +1288,16 @@ function multi_array_search($array, $search)
     return 150;
   }
   add_filter('woocommerce_admin_meta_boxes_variations_per_page', 'update_variations_number');
+
+function add_extra_row_after_cart_items() {
+    
+    echo '<script>
+        jQuery(document).ready(function ($) {
+            // Insert your JavaScript here
+            $(".actions").closest("tr").before(\'<tr class="sell-extra-cart-row"><td colspan="6" class="sell-extra-cart-internal-row"><a href="https://www.smartphonesplus.com/sell/">+Sell Another Device?</a></td></tr>\');
+        });
+    </script>';
+}
+
+// Hook the function into the before cart totals section
+add_action('woocommerce_before_cart_totals', 'add_extra_row_after_cart_items');
