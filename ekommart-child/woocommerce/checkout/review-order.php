@@ -33,7 +33,7 @@ defined( 'ABSPATH' ) || exit;
 
 			if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_checkout_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
 				$product_id = $cart_item['product_id'];
-				$product_thumbnail = get_the_post_thumbnail( $product_id, 'thumbnail' );
+				$product_thumbnail = get_the_post_thumbnail( $product_id, array(50, 50) );
 
 				?>
 				<tr class="<?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">					
