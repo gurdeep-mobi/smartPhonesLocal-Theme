@@ -699,19 +699,22 @@ function wf_pklist_alter_barcode_data_fn($invoice_number, $template_type, $order
 	return $order->get_order_number();
 }
 
-add_action( 'admin_menu', 'smartphones_add_admin_menu_for_order_export' );
-function smartphones_add_admin_menu_for_order_export() {
-    add_menu_page( __( 'Products Export', 'smartphones' ), 'Products Export', 'nosuchcapability', 'smartphones-products-export', null, 'dashicons-chart-bar', 6 );
-    add_submenu_page( 'smartphones-products-export', 'Products Export', 'Products Export', 'manage_options', 'products-export', 'variants_exports' );
+// add_action( 'admin_menu', 'smartphones_add_admin_menu_for_order_export' );
+// function smartphones_add_admin_menu_for_order_export() {
+//     add_menu_page( __( 'Products Export', 'smartphones' ), 'Products Export', 'nosuchcapability', 'smartphones-products-export', null, 'dashicons-chart-bar', 6 );
+//     add_submenu_page( 'smartphones-products-export', 'Products Export', 'Products Export', 'manage_options', 'products-export', 'variants_exports_test' );
     
-}
-function variants_exports(){ 
-  echo 'https://www.smartphonesplus.com/wp-content/uploads/csv/variantData.csv'; die;
+// }
+
+function variants_exports_test(){ die;
+  set_time_limit(0);
+  //echo 'https://www.smartphonesplus.com/wp-content/uploads/csv/variantData.csv'; die('123');
   //Samsung = 642,640,639,641,88,113,111;
   //google = 104,665;
   //ipad = 117,115,116,114
   //ipod = 97,134,135,133
   // die;
+  $updatedHandel = '{"apple-ipad-air-5":"apple-ipad-air-5th-gen","samsung-galaxy-s21-fe":"samsung-galaxy-s21-fe-5g","apple-ipad-9th-generation":"apple-ipad-9th-gen","apple-ipad-7th-generation":"apple-ipad-7th-gen","apple-ipad-8th-generation":"apple-ipad-8th-gen","apple-ipad-pro-12-9%e2%80%b3-5th-gen":"apple-ipad-pro-129-5th-gen-2021","apple-ipad-pro-11-2021":"apple-ipad-pro-11-3rd-gen-2021","samsung-galaxy-s21-5g-2":"samsung-galaxy-s21-plus-5g","apple-ipad-air-2020":"apple-ipad-air-4th-gen","samsung-galaxy-s20-2":"samsung-galaxy-s20-plus","apple-iphone-se-2020":"apple-iphone-se-2nd-gen","apple-ipad-pro-12-9-4th-generation":"apple-ipad-pro-129-4th-gen-2020","apple-ipad-pro-11-2020":"apple-ipad-pro-11-2nd-gen-2020","samsung-galaxy-note-10-2":"samsung-galaxy-note-10-plus","samsung-galaxy-s10-2":"samsung-galaxy-s10-plus","apple-ipad-pro-10-5-2nd-gen":"apple-ipad-pro-105","apple-iphone-xr-106":"apple-iphone-xr","apple-iphone-xs-max-106":"apple-iphone-xs-max","apple-ipod-touch-6th-gen-21":"apple-ipod-touch-6th-gen","apple-ipod-nano-6th-gen-1-54-multitouch-clip":"apple-ipod-nano-6th-gen","apple-ipod-nano-7th-gen-2-5-multitouch-6":"apple-ipod-nano-7th-gen-2015","apple-ipod-classic-6th-gen-16":"apple-ipod-classic-6th-gen","apple-iphone-x-106":"apple-iphone-x","apple-iphone-6-106":"apple-iphone-6","apple-ipad-mini-2-76":"apple-ipad-mini-retina","apple-ipad-mini-3-31":"apple-ipad-mini-3","apple-ipad-mini-4-41":"apple-ipad-mini-4","apple-sell-ipad-air-102":"apple-ipad-air","apple-ipad-air-2-41":"apple-ipad-air-2","apple-ipad-5th-generation":"apple-ipad-5th-gen","apple-ipad-6th-gen-97":"apple-ipad-6th-gen","apple-ipad-pro-12-9-1st-gen-145":"apple-ipad-pro-129-1st-gen-2015","apple-ipad-pro-12-9-2nd-gen-145":"apple-ipad-pro-129","apple-ipad-pro-9-7-1st-gen-145":"apple-ipad-pro-97","apple-ipad-pro-11":"apple-ipad-pro-11-2018","apple-ipad-pro-12-9-193":"apple-ipad-pro-129-3rd-gen-2018","samsung-galaxy-s7-active-6":"samsung-galaxy-s7-active","samsung-galaxy-s7-36":"samsung-galaxy-s7","samsung-galaxy-s7-edge-36":"samsung-galaxy-s7-edge","samsung-galaxy-note-8-36":"samsung-galaxy-note-8","samsung-galaxy-s8-active-6":"samsung-galaxy-s8-active","samsung-galaxy-s8-37":"samsung-galaxy-s8","samsung-galaxy-s8-36":"samsung-galaxy-s8-plus","samsung-galaxy-s9-57":"samsung-galaxy-s9","samsung-galaxy-s9-56":"samsung-galaxy-s9-plus","samsung-galaxy-note-9-71":"samsung-galaxy-note-9","samsung-galaxy-s6-52":"samsung-galaxy-s-6","samsung-galaxy-s6-edge-53":"samsung-galaxy-s-6-edge","samsung-s6-active-6":"samsung-galaxy-s-6-active"}';
   $prod_categories = array(16,131,132,136,110,386,385,384,383,382,381,526,527,645,661,662,663,642,640,639,641,88,113,111,104,665,117,115,116,114,97,134,135,133);
   //$prod_categories = array(97);
   $args = array(
@@ -732,7 +735,400 @@ function variants_exports(){
   $final=[];
   $_product_title = '';
   $i=0;
-  
+  $result = (array) json_decode($updatedHandel);
+
+  foreach($products as $product):   //echo '<pre>'; print_r($product); die;
+      $child = new WC_Product_Variable($product->ID);
+      $available_variations = $child->get_available_variations(); 
+      if(strpos($product->post_name, "iphone") !== false){
+        $_product_title = 'apple-'.$product->post_name;
+      }elseif (strpos($product->post_name, "ipad") !== false) {
+        $_product_title = 'apple-'.$product->post_name;
+      }elseif (strpos($product->post_name, "ipod") !== false) {
+        $_product_title = 'apple-'.$product->post_name;
+      }else{
+        $_product_title = $product->post_name;
+      }
+      foreach ($available_variations as $key => $value): 
+        if($value['attributes']['attribute_pa_device-condition']!='no-power'){
+           $all_childs[$i]['product_id'] = $product->ID;
+
+           if (array_key_exists($_product_title, $result)) {
+                $all_childs[$i]['product_title'] = $result[$_product_title];
+           }else{
+              $all_childs[$i]['product_title'] = $_product_title;
+           }
+           
+           $all_childs[$i]['url'] = get_permalink($product->ID);
+           $all_childs[$i]['carrier'] = $value['attributes']['attribute_pa_carrier'];
+           $all_childs[$i]['memory'] = (isset($value['attributes']['attribute_pa_ram'])) ? str_replace("-", "", $value['attributes']['attribute_pa_ram']) : '';
+           $all_childs[$i]['storage'] = (isset($value['attributes']['attribute_pa_storage-capacity'])) ? str_replace("-", "", $value['attributes']['attribute_pa_storage-capacity']) : '';
+           $all_childs[$i]['processor'] = $value['attributes']['attribute_pa_processor'];
+           $all_childs[$i]['condition'] = $value['attributes']['attribute_pa_device-condition'];
+           $all_childs[$i]['charger-included'] = $value['attributes']['attribute_pa_is-the-charger-included'];
+           $all_childs[$i]['price'] = $value['display_price'];
+           $i++;
+        }
+      endforeach;
+  endforeach;
+  $variants = [];
+  $variants1 = [];
+  $array_search_check = [];
+   
+  foreach ($all_childs as $k => $val) : 
+        if(!empty($val['carrier']) && !empty($val['storage'])){ 
+          if (array_search($val['product_id'], array_column($variants, 'product_id')) !== FALSE 
+            && array_search($val['carrier'], array_column($variants, 'carrier')) !== FALSE 
+            && array_search($val['storage'], array_column($variants, 'storage')) !== FALSE):
+
+            $array_search_check = multi_array_search($variants, array('carrier' => $val['carrier'], 'storage' => $val['storage'], 'product_id' => $val['product_id']));
+
+              if(empty($array_search_check)){ 
+                $variants[] = array(
+                      'product_id'=>$val['product_id'],
+                      'product_title'=>$val['product_title'],
+                      'carrier'=>$val['carrier'],
+                      'memory'=>$val['memory'],
+                      'storage'=>$val['storage'],
+                      'processor'=>$val['processor'],
+                      'price_new'=>'',
+                      $val['condition']=> $val['price']
+                );
+              }else{
+                  $getKey = $array_search_check[0];
+                  $variants[$getKey][$val["condition"]] = $val['price'];
+              }
+          else: 
+              $variants[] = array(
+                  'product_id'=>$val['product_id'],
+                  'product_title'=>$val['product_title'],
+                  'carrier'=>$val['carrier'],
+                  'memory'=>$val['memory'],
+                  'storage'=>$val['storage'],
+                  'processor'=>$val['processor'],
+                  'price_new'=>'',
+                  $val['condition']=> $val['price']
+                );
+             endif;
+        }
+        if(!empty($val['carrier']) && empty($val['storage'])){ 
+          if (array_search($val['product_id'], array_column($variants, 'product_id')) !== FALSE 
+            && array_search($val['carrier'], array_column($variants, 'carrier')) !== FALSE ):
+            $array_search_check = multi_array_search($variants, array('carrier' => $val['carrier'], 'product_id' => $val['product_id']));
+            
+              if(empty($array_search_check)){ 
+                $variants[] = array(
+                    'product_id'=>$val['product_id'],
+                    'product_title'=>$val['product_title'],
+                    'carrier'=>$val['carrier'],
+                    'memory'=>$val['memory'],
+                    'storage'=>$val['storage'],
+                    'processor'=>$val['processor'],
+                    'price_new'=>'',
+                    $val['condition']=> $val['price']
+                );
+              }else{
+                  $getKey = $array_search_check[0];
+                  $variants[$getKey][$val["condition"]] = $val['price'];
+              }
+            else: 
+              if(!empty($val['condition'])){
+                  $variants[] = array(
+                      'product_id'=>$val['product_id'],
+                      'product_title'=>$val['product_title'],
+                      'carrier'=>$val['carrier'],
+                      'memory'=>$val['memory'],
+                      'storage'=>$val['storage'],
+                      'processor'=>$val['processor'],
+                      'price_new'=>'',
+                      $val['condition']=> $val['price']
+                  );
+              }
+              
+          endif;
+        }
+        if(empty($val['carrier']) && empty($val['condition']) && !empty($val['storage'])){ 
+          if (array_search($val['product_id'], array_column($variants, 'product_id')) !== FALSE 
+            && array_search($val['storage'], array_column($variants, 'storage')) !== FALSE ):
+            $array_search_check = multi_array_search($variants, array('storage' => $val['storage'], 'product_id' => $val['product_id'])); 
+              if(empty($array_search_check)){ 
+                $variants[] = array(
+                    'product_id'=>$val['product_id'],
+                    'product_title'=>$val['product_title'],
+                    'carrier'=>$val['carrier'],
+                    'memory'=>$val['memory'],
+                    'storage'=>$val['storage'],
+                    'processor'=>$val['processor'],
+                    'price_new'=>'',
+                    $val['condition']=> $val['price']
+                );
+              }else{ 
+                  $getKey = $array_search_check[0];
+                  $variants[$getKey][$val["condition"]] = $val['price'];
+              }
+            else:  
+              $variants[] = array(
+                  'product_id'=>$val['product_id'],
+                  'product_title'=>$val['product_title'],
+                  'carrier'=>$val['carrier'],
+                  'memory'=>$val['memory'],
+                  'storage'=>$val['storage'],
+                  'processor'=>$val['processor'],
+                  'price_new'=>'',
+                  $val['condition']=> $val['price']
+              );
+          endif;
+        }
+        if(!empty($val['memory']) && !empty($val['processor']) && !empty($val['charger-included'])){
+         
+          if(isset($val['charger-included']) && $val['charger-included']=='yes'){
+              if (array_search($val['product_id'], array_column($variants, 'product_id')) !== FALSE 
+              && array_search($val['memory'], array_column($variants, 'memory')) !== FALSE 
+              && array_search($val['processor'], array_column($variants, 'processor')) !== FALSE):
+
+              $array_search_check = multi_array_search($variants, array('memory' => $val['memory'], 'processor' => $val['processor'], 'product_id' => $val['product_id']));
+
+                if(empty($array_search_check)){ 
+                  $variants[] = array(
+                      'product_id'=>$val['product_id'],
+                      'product_title'=>$val['product_title'],
+                      'carrier'=>$val['carrier'],
+                      'memory'=>$val['memory'],
+                      'storage'=>$val['storage'],
+                      'processor'=>$val['processor'],
+                      'price_new'=>'',
+                      $val['condition']=> $val['price']
+                  );
+                  
+                }else{
+                    $getKey = $array_search_check[0];
+                    
+                    $variants[$getKey][$val["condition"]] = $val['price'];
+                }
+            else: 
+              $variants[] = array(
+                  'product_id'=>$val['product_id'],
+                  'product_title'=>$val['product_title'],
+                  'carrier'=>$val['carrier'],
+                  'memory'=>$val['memory'],
+                  'storage'=>$val['storage'],
+                  'processor'=>$val['processor'],
+                  'price_new'=>'',
+                  $val['condition']=> $val['price']
+                );
+                
+            endif;
+          }
+          
+        }
+        if(!empty($val['memory']) && !empty($val['processor']) && empty($val['charger-included'])){
+          if (array_search($val['product_id'], array_column($variants, 'product_id')) !== FALSE 
+          && array_search($val['memory'], array_column($variants, 'memory')) !== FALSE 
+          && array_search($val['processor'], array_column($variants, 'processor')) !== FALSE):
+
+          $array_search_check = multi_array_search($variants, array('memory' => $val['memory'], 'processor' => $val['processor'], 'product_id' => $val['product_id']));
+
+            if(empty($array_search_check)){ 
+              $variants[] = array(
+                  'product_id'=>$val['product_id'],
+                  'product_title'=>$val['product_title'],
+                  'carrier'=>$val['carrier'],
+                  'memory'=>$val['memory'],
+                  'storage'=>$val['storage'],
+                  'processor'=>$val['processor'],
+                  'price_new'=>'',
+                  $val['condition']=> $val['price']
+              );
+              
+            }else{
+                $getKey = $array_search_check[0];
+                
+                $variants[$getKey][$val["condition"]] = $val['price'];
+            }
+          else: 
+            $variants[] = array(
+                'product_id'=>$val['product_id'],
+                'product_title'=>$val['product_title'],
+                'carrier'=>$val['carrier'],
+                'memory'=>$val['memory'],
+                'storage'=>$val['storage'],
+                'processor'=>$val['processor'],
+                'price_new'=>'',
+                $val['condition']=> $val['price']
+              );
+            endif;
+        }
+        if(!empty($val['condition']) && !empty($val['charger-included']) && empty($val['carrier']) && empty($val['memory']) && empty($val['storage'])){ 
+         
+          if(isset($val['charger-included']) && $val['charger-included']=='yes'){
+              if (array_search($val['product_id'], array_column($variants, 'product_id')) !== FALSE 
+              && array_search($val['condition'], array_column($variants, 'condition')) !== FALSE ):
+
+              $array_search_check = multi_array_search($variants, array('condition' => $val['condition'], 'product_id' => $val['product_id']));
+
+                if(empty($array_search_check)){ 
+                  $variants[] = array(
+                      'product_id'=>$val['product_id'],
+                      'product_title'=>$val['product_title'],
+                      'carrier'=>$val['carrier'],
+                      'memory'=>$val['memory'],
+                      'storage'=>$val['storage'],
+                      'processor'=>$val['processor'],
+                      'price_new'=>'',
+                      $val['condition']=> $val['price']
+                  );
+                  
+                }else{
+                    $getKey = $array_search_check[0];
+                    
+                    $variants[$getKey][$val["condition"]] = $val['price'];
+                }
+            else: 
+              $variants[] = array(
+                  'product_id'=>$val['product_id'],
+                  'product_title'=>$val['product_title'],
+                  'carrier'=>$val['carrier'],
+                  'memory'=>$val['memory'],
+                  'storage'=>$val['storage'],
+                  'processor'=>$val['processor'],
+                  'price_new'=>'',
+                  $val['condition']=> $val['price']
+                );
+                
+            endif;
+          }
+          
+        }
+        if(!empty($val['condition']) && empty($val['carrier']) && empty($val['memory']) && empty($val['storage']) && empty($val['processor']) && empty($val['charger-included'])){ 
+            if (array_search($val['product_id'], array_column($variants, 'product_id')) !== FALSE 
+              && array_search($val['condition'], array_column($variants, 'condition')) !== FALSE ):
+
+              $array_search_check = multi_array_search($variants, array('condition' => $val['condition'], 'product_id' => $val['product_id']));
+
+                if(empty($array_search_check)){ 
+                  $variants[] = array(
+                      'product_id'=>$val['product_id'],
+                      'product_title'=>$val['product_title'],
+                      'carrier'=>$val['carrier'],
+                      'memory'=>$val['memory'],
+                      'storage'=>$val['storage'],
+                      'processor'=>$val['processor'],
+                      'price_new'=>'',
+                      $val['condition']=> $val['price']
+                  );
+                  
+                }else{
+                    $getKey = $array_search_check[0];
+                    
+                    $variants[$getKey][$val["condition"]] = $val['price'];
+                }
+            else: 
+              $variants[] = array(
+                  'product_id'=>$val['product_id'],
+                  'product_title'=>$val['product_title'],
+                  'carrier'=>$val['carrier'],
+                  'memory'=>$val['memory'],
+                  'storage'=>$val['storage'],
+                  'processor'=>$val['processor'],
+                  'price_new'=>'',
+                  $val['condition']=> $val['price']
+                );
+                
+            endif;
+        }
+        if(!empty($val['condition']) && !empty($val['storage']) && empty($val['carrier'])){
+          if (array_search($val['product_id'], array_column($variants, 'product_id')) !== FALSE 
+            && array_search($val['storage'], array_column($variants, 'storage')) !== FALSE):
+
+            $array_search_check = multi_array_search($variants, array('storage' => $val['storage'], 'product_id' => $val['product_id']));
+
+              if(empty($array_search_check)){ 
+                $variants[] = array(
+                      'product_id'=>$val['product_id'],
+                      'product_title'=>$val['product_title'],
+                      'carrier'=>$val['carrier'],
+                      'memory'=>$val['memory'],
+                      'storage'=>$val['storage'],
+                      'processor'=>$val['processor'],
+                      'price_new'=>'',
+                      $val['condition']=> $val['price']
+                );
+              }else{
+                  $getKey = $array_search_check[0];
+                  $variants[$getKey][$val["condition"]] = $val['price'];
+              }
+          else: 
+              $variants[] = array(
+                  'product_id'=>$val['product_id'],
+                  'product_title'=>$val['product_title'],
+                  'carrier'=>$val['carrier'],
+                  'memory'=>$val['memory'],
+                  'storage'=>$val['storage'],
+                  'processor'=>$val['processor'],
+                  'price_new'=>'',
+                  $val['condition']=> $val['price']
+                );
+             endif;
+        }
+        //echo '<pre>'; print_r($variants); die('END1');   
+  endforeach;
+
+  //echo '<pre>'; print_r($variants); die('END1');
+
+     $file_dir = WP_CONTENT_DIR . '/uploads/csv/';
+     $filename = $file_dir.'variantData.csv';
+     $fp = fopen($filename,"w");
+     fputcsv($fp,array('partner_ref','product','carrier','memory','storage','processor','price_new','price_mint','price_good','price_fair','price_broken','url'));
+    foreach ($variants as $list) {
+      if(array_key_exists('flawless',$list) == false){
+        $list['flawless']='';
+      }
+      if(array_key_exists('good',$list) == false){
+        $list['good']='';
+      }
+      if(array_key_exists('fair',$list) == false){
+        $list['fair']='';
+      }
+      if(array_key_exists('broken',$list) == false){
+        $list['broken']='';
+      }
+      $list['url']=get_permalink($list['product_id']);
+        fputcsv($fp, $list);
+    }
+    fclose($fp);
+
+}
+
+function variants_exports(){ 
+  set_time_limit(0);
+  //echo 'https://www.smartphonesplus.com/wp-content/uploads/csv/variantData.csv'; die('123');
+  //Samsung = 642,640,639,641,88,113,111;
+  //google = 104,665;
+  //ipad = 117,115,116,114
+  //ipod = 97,134,135,133
+  // die;
+   $updatedHandel = '{"apple-ipad-air-5":"apple-ipad-air-5th-gen","samsung-galaxy-s21-fe":"samsung-galaxy-s21-fe-5g","apple-ipad-9th-generation":"apple-ipad-9th-gen","apple-ipad-7th-generation":"apple-ipad-7th-gen","apple-ipad-8th-generation":"apple-ipad-8th-gen","apple-ipad-pro-12-9%e2%80%b3-5th-gen":"apple-ipad-pro-129-5th-gen-2021","apple-ipad-pro-11-2021":"apple-ipad-pro-11-3rd-gen-2021","samsung-galaxy-s21-5g-2":"samsung-galaxy-s21-plus-5g","apple-ipad-air-2020":"apple-ipad-air-4th-gen","samsung-galaxy-s20-2":"samsung-galaxy-s20-plus","apple-iphone-se-2020":"apple-iphone-se-2nd-gen","apple-ipad-pro-12-9-4th-generation":"apple-ipad-pro-129-4th-gen-2020","apple-ipad-pro-11-2020":"apple-ipad-pro-11-2nd-gen-2020","samsung-galaxy-note-10-2":"samsung-galaxy-note-10-plus","samsung-galaxy-s10-2":"samsung-galaxy-s10-plus","apple-ipad-pro-10-5-2nd-gen":"apple-ipad-pro-105","apple-iphone-xr-106":"apple-iphone-xr","apple-iphone-xs-max-106":"apple-iphone-xs-max","apple-ipod-touch-6th-gen-21":"apple-ipod-touch-6th-gen","apple-ipod-nano-6th-gen-1-54-multitouch-clip":"apple-ipod-nano-6th-gen","apple-ipod-nano-7th-gen-2-5-multitouch-6":"apple-ipod-nano-7th-gen-2015","apple-ipod-classic-6th-gen-16":"apple-ipod-classic-6th-gen","apple-iphone-x-106":"apple-iphone-x","apple-iphone-6-106":"apple-iphone-6","apple-ipad-mini-2-76":"apple-ipad-mini-retina","apple-ipad-mini-3-31":"apple-ipad-mini-3","apple-ipad-mini-4-41":"apple-ipad-mini-4","apple-sell-ipad-air-102":"apple-ipad-air","apple-ipad-air-2-41":"apple-ipad-air-2","apple-ipad-5th-generation":"apple-ipad-5th-gen","apple-ipad-6th-gen-97":"apple-ipad-6th-gen","apple-ipad-pro-12-9-1st-gen-145":"apple-ipad-pro-129-1st-gen-2015","apple-ipad-pro-12-9-2nd-gen-145":"apple-ipad-pro-129","apple-ipad-pro-9-7-1st-gen-145":"apple-ipad-pro-97","apple-ipad-pro-11":"apple-ipad-pro-11-2018","apple-ipad-pro-12-9-193":"apple-ipad-pro-129-3rd-gen-2018","samsung-galaxy-s7-active-6":"samsung-galaxy-s7-active","samsung-galaxy-s7-36":"samsung-galaxy-s7","samsung-galaxy-s7-edge-36":"samsung-galaxy-s7-edge","samsung-galaxy-note-8-36":"samsung-galaxy-note-8","samsung-galaxy-s8-active-6":"samsung-galaxy-s8-active","samsung-galaxy-s8-37":"samsung-galaxy-s8","samsung-galaxy-s8-36":"samsung-galaxy-s8-plus","samsung-galaxy-s9-57":"samsung-galaxy-s9","samsung-galaxy-s9-56":"samsung-galaxy-s9-plus","samsung-galaxy-note-9-71":"samsung-galaxy-note-9","samsung-galaxy-s6-52":"samsung-galaxy-s-6","samsung-galaxy-s6-edge-53":"samsung-galaxy-s-6-edge","samsung-s6-active-6":"samsung-galaxy-s-6-active"}';
+  $prod_categories = array(16,131,132,136,110,386,385,384,383,382,381,526,527,645,661,662,663,642,640,639,641,88,113,111,104,665,117,115,116,114,97,134,135,133);
+  //$prod_categories = array(97);
+  $args = array(
+    'post_type' => 'product',
+    'numberposts' => -1,
+    'tax_query'             => array(
+      array(
+          'taxonomy'      => 'product_cat',
+          'field'         => 'id', //This is optional, as it defaults to 'term_id'
+          'terms'         => $prod_categories,
+          'operator'      => 'IN' // Possible values are 'IN', 'NOT IN', 'AND'.
+      )
+    )
+  );
+  $products = get_posts( $args );
+  $array_data = $array_data1 = [];
+  $all_childs = [];
+  $final=[];
+  $_product_title = '';
+  $i=0;
+  $result = (array) json_decode($updatedHandel);
   foreach($products as $product):   //echo '<pre>'; print_r($product);
       $child = new WC_Product_Variable($product->ID);
       $available_variations = $child->get_available_variations(); 
@@ -748,7 +1144,13 @@ function variants_exports(){
       foreach ($available_variations as $key => $value): 
         if($value['attributes']['attribute_pa_device-condition']!='no-power'){
            $all_childs[$i]['product_id'] = $product->ID;
-           $all_childs[$i]['product_title'] = $_product_title;
+
+           if (array_key_exists($_product_title, $result)) {
+                $all_childs[$i]['product_title'] = $result[$_product_title];
+           }else{
+              $all_childs[$i]['product_title'] = $_product_title;
+           }
+           //$all_childs[$i]['product_title'] = $_product_title;
            $all_childs[$i]['url'] = get_permalink($product->ID);
            $all_childs[$i]['carrier'] = $value['attributes']['attribute_pa_carrier'];
            $all_childs[$i]['memory'] = (isset($value['attributes']['attribute_pa_ram'])) ? str_replace("-", "", $value['attributes']['attribute_pa_ram']) : '';
@@ -1117,3 +1519,15 @@ function multi_array_search($array, $search)
     return 150;
   }
   add_filter('woocommerce_admin_meta_boxes_variations_per_page', 'update_variations_number');
+
+
+function my_custom_cron_schedule() {
+    // Schedule an event if it's not already scheduled
+    if ( ! wp_next_scheduled( 'swappa_feed_generation_event' ) ) {
+        wp_schedule_event( strtotime( '2:00 PM' ), 'daily', 'swappa_feed_generation_event' );
+    }
+}
+
+add_action( 'wp', 'my_custom_cron_schedule' );
+
+add_action( 'swappa_feed_generation_event', 'variants_exports' );
