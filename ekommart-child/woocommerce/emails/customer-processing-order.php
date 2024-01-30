@@ -30,7 +30,7 @@ do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 <p><?php printf( esc_html__( 'Just to let you know &mdash; we\'ve received your order #%s, and it is now being processed:', 'woocommerce' ), esc_html( $order->get_order_number() ) ); ?></p>
 
 <p>Please print off the prepaid shipping label using the button below or via the attachment to this email to send in your device(s).</p>
-<p>Your return request has been processed and your return label is now available at USPS <a href="https://tools.usps.com/find-location.htm">Post Office</a>.</p>
+
 <p>Please bring your packaged and ready-to-ship item to your nearest Post office and show the Label Broker Code below to the USPS Retal Associate at the Retail Counter to print the label. </p>
 
 <p style="text-align: center;"><a href="<?php echo home_url(); ?>/wp-content/uploads/shipping_labels/<?php echo $order->get_order_number(); ?>_return_label_raw.pdf" target="_blank" style="background-color:#e06901!important; border-color:#e06901!important; color:#fff; text-decoration: none; border: 2px solid;border-radius: 3px; background: 0 0; cursor: pointer; padding: 0.6180469716em 1.41575em;font-weight: 700;text-shadow: none;display: inline-block;-webkit-appearance: none;">Print Shipping Label</a></p>
@@ -42,7 +42,7 @@ $label_id = get_post_meta( $order->get_id(), 'usps_qr_label_id', true );
 $billing_zipcode = $order->get_billing_postcode();
 ?>
 
-<p>You can also <a href="https://tools.usps.com/label-broker.htm">access your label online.</a></p>
+<p>You can also access your label <a href="https://tools.usps.com/label-broker.htm">online.</a></p>
 
 
 <p>If you requested packaging material expect to receive them within 3-6 business days. The same shipping label attached will be included in the package for you to use.</p>
