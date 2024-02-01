@@ -41,7 +41,7 @@ do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 $label_id = get_post_meta( $order->get_id(), 'usps_qr_label_id', true );
 $billing_zipcode = $order->get_billing_postcode();
 ?>
-<p>You can find your post Office location <a href="https://tools.usps.com/find-location.htm?locationType=po&serviceType=lbroretail&address=<?php echo $billing_zipcode; ?>">here</a></p>
+<p>You can find your Post Office location <a href="https://tools.usps.com/find-location.htm?locationType=po&serviceType=lbroretail&address=<?php echo $billing_zipcode; ?>">here</a></p>
 <p>You can also access your label <a href="https://tools.usps.com/label-broker.htm">online.</a></p>
 
 
