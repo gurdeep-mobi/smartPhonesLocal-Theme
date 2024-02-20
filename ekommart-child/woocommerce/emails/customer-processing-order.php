@@ -59,12 +59,12 @@ if(isset($tracking_items[0]['tracking_number'])){
 <p style="text-align:center;">
     <span style="padding: 0.6180469716em 1.41575em;">
         <a href="https://tools.usps.com/find-location.htm?locationType=po&serviceType=lbroretail&address=<?php echo $billing_zipcode; ?>" target="_blank">
-          <img src="https://smartphonesstg.wpengine.com/wp-content/uploads/2020/02/Find-post-office.png" />
+          <img src="https://smartphonesstg.wpengine.com/wp-content/uploads/2020/02/Find-post-office-2x.png" style="width:200px;" />
         </a>
     </span>
     <span style="padding: 0.6180469716em 1.41575em;">
         <a href="<?php echo home_url(); ?>/wp-content/uploads/shipping_labels/<?php echo $order->get_order_number(); ?>_return_label_raw.pdf" target="_blank" >
-            <img src="https://smartphonesstg.wpengine.com/wp-content/uploads/2020/02/Return-Label.png" />
+            <img src="https://smartphonesstg.wpengine.com/wp-content/uploads/2020/02/Return-Label-2x.png"  style="width:200px;" />
         </a>
     </span>
 </p>
