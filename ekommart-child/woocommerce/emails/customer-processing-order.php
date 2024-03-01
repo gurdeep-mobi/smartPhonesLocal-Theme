@@ -45,7 +45,7 @@ if(isset($tracking_items[0]['tracking_number'])){
 <p>
     <span>No printer for the shipping label? No problem!</span>
     <ul>
-        <li>Bring your packaged device(s) to the USPS location. To find your most convienient location use the <a href="https://tools.usps.com/find-location.htm?locationType=po&serviceType=lbroretail&address=<?php echo $billing_zipcode; ?>">USPS store locator.</a></li>
+        <li>Bring your packaged device(s) to a USPS location. To find your most convienient location use the <a href="https://tools.usps.com/find-location.htm?locationType=po&serviceType=lbroretail&address=<?php echo $billing_zipcode; ?>">USPS store locator.</a></li>
         <li>Show the QR code below to the USPS associate or use the self service kiosk. They will print your shipping label and ship your device(s) for free.</li>
         <li>We'll update you when your package has been received and inspected.</li>
     </ul>
@@ -58,7 +58,7 @@ if(isset($tracking_items[0]['tracking_number'])){
 </p>
 <p style="text-align:center;">
     <span style="padding: 0.6180469716em 1.41575em;">
-        <a href="https://tools.usps.com/find-location.htm?locationType=po&serviceType=lbroretail&address=<?php echo $billing_zipcode; ?>" target="_blank">
+        <a href="https://tools.usps.com/find-location.htm?locationType=po&serviceType=lbroretail&address=<?php echo $billing_zipcode; ?>" target="_blank" style="text-decoration: none;">
           <img src="https://smartphonesstg.wpengine.com/wp-content/uploads/2020/02/Find-post-office-2x.png" style="width:200px;" />
         </a>
     </span>
